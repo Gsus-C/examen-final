@@ -22,10 +22,10 @@ def create_app():
     # Configuración de Swagger/OpenAPI
     api = Api(
         app,
-        title="API de los usuarios",
+        title="API de Usuarios",
         version="1.0",
         description="A continuación se muestra la documentación de los endpoints disponibles",
-        doc='/docs'  # Exponer documentación en esta ruta
+        doc='/documentation'  # Exponer documentación en esta ruta
     )
 
     # Agregar Namespaces (rutas y lógica)
