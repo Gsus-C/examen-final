@@ -1,0 +1,148 @@
+openapi: 3.0.0
+info:
+  title: API de Usuarios
+  description: Rutas para manejo de usuarios
+  version: 1.0.0
+paths:
+  /users:
+    get:
+      summary: Obtener todos los usuarios
+      description: Obtén todos los usuarios en formato JSON.
+      responses:
+        '200':
+          description: Lista de usuarios
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    id:
+                      type: integer
+                      description: ID del usuario
+                    username:
+                      type: string
+                      description: Nombre de usuario
+                    email:
+                      type: string
+                      description: Correo del usuario
+        '500':
+          description: Error al obtener usuarios
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  error:
+                    type: string
+    post:
+      summary: Crear un nuevo usuario
+      description: Crea un nuevo usuario proporcionando nombre, correo y contraseña.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Nombre de usuario
+                email:
+                  type: string
+                  description: Correo del usuario
+                password:
+                  type: string
+                  description: Contraseña del usuario
+      responses:
+        '201':
+          description: Usuario creado exitosamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  message:
+                    type: string
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                      username:
+                        type: string
+                      email:
+                        type: string
+        '400':
+          description: Campos obligatorios faltantes
+        '500':
+          description: Error al crear usuario
+
+  /users/{user_id}:
+    get:
+      summary: Obtener usuario por ID
+      description: Obtén un usuario específico utilizando su ID.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario obtenido exitosamente
+        '404':
+          description: Usuario no encontrado
+        '500':
+          description: Error obteniendo usuario
+    put:
+      summary: Actualizar un usuario existente
+      description: Actualiza los datos de un usuario utilizando su ID.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                username:
+                  type: string
+                  description: Nombre de usuario
+                email:
+                  type: string
+                  description: Correo del usuario
+                password:
+                  type: string
+                  description: Contraseña del usuario
+      responses:
+        '200':
+          description: Usuario actualizado exitosamente
+        '404':
+          description: Usuario no encontrado
+        '500':
+          description: Error actualizando usuario
+    delete:
+      summary: Eliminar un usuario por ID
+      description: Elimina un usuario específico utilizando su ID.
+      parameters:
+        - name: user_id
+          in: path
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Usuario eliminado exitosamente
+        '404':
+          description: Usuario no encontrado
+        '500':
+          description: Error eliminando usuario
